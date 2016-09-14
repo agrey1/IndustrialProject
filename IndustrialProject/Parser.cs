@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections;
+using System.ComponentModel;
 
 namespace IndustrialProject
 {
@@ -15,7 +16,7 @@ namespace IndustrialProject
 
         }
 
-        public TrafficSample parse(string filePath)
+        public TrafficSample parse(string filePath, BackgroundWorker backgroundWorker1)
         {
             StreamReader reader = new StreamReader(filePath);
 
@@ -47,6 +48,9 @@ namespace IndustrialProject
             int lineCount = 0;
             foreach (string line in lines)
             {
+                int percentage = (int)Math.Floor(((float)lineCount / lines.Count) * 100);
+                backgroundWorker1.ReportProgress(percentage);
+
                 if (line.Length > 0)
                 {
                     //richTextBox1.AppendText(line);

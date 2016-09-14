@@ -12,21 +12,17 @@ namespace IndustrialProject
 {
     public partial class Form1 : Form
     {
+        LoadingForm alert; // Loading window when processing
+        string fileName = "";
+        Parser parser;
+        TrafficSample sample;
+        List<Packet> packets;
+
         public Form1()
         {
             InitializeComponent();
         }
-
-        private void openFileButton_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void loadFileButton_Click(object sender, EventArgs e)
-        {
-            
-        }
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
             //webBrowser1.Navigate(@"C:\Users\AlexanderGrey\Documents\Visual Studio 2013\Projects\IndustrialProject\IndustrialProject\bin\Debug\test.html");
@@ -53,13 +49,12 @@ namespace IndustrialProject
                 columnHeader.Text = column;
                 this.packetListView.Columns.Add(columnHeader);
             }
+
+            backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
+            backgroundWorker1.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker1_ProgressChanged);
+            backgroundWorker1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
         }
-
-        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-
-        }
-
+        
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog packetCaptureDialog = new OpenFileDialog();
@@ -70,76 +65,138 @@ namespace IndustrialProject
             // Call the ShowDialog method to show the dialog box.
             DialogResult result = packetCaptureDialog.ShowDialog();
 
-            string fileName = "";
             // Process input if the user clicked OK.
             if (result == DialogResult.OK)
             {
                 fileName = packetCaptureDialog.FileName;
             }
 
-            Parser parser = new Parser();
-            TrafficSample sample = parser.parse(fileName);
+            if (backgroundWorker1.IsBusy != true)
+            {
+                alert = new LoadingForm(); // LoadingForm
+                alert.Canceled += new EventHandler<EventArgs>(button1_Click); // Event handler for the Cancel button in LoadingForm
+                alert.Show(); // Show LoadingForm
+                Console.WriteLine("Before background worker");
+                backgroundWorker1.RunWorkerAsync(); // Start the asynchronous operation
+            }
+        }
 
-            packetContentTextBox.AppendText("File start time: " + sample.getStartTime().ToString() + "\n");
-            packetContentTextBox.AppendText("File end time: " + sample.getEndTime().ToString() + "\n");
-            packetContentTextBox.AppendText("File source port: " + sample.getSourcePort() + "\n");
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            parser = new Parser();
+            sample = parser.parse(fileName, backgroundWorker1);
+            
 
-            List < Packet > packets = sample.getPackets();
+            packets = sample.getPackets();
             packetCountLabel.Text = packets.Count.ToString();
 
             //Todo: Display number of erronous packets
             startTimeLabel.Text = sample.getStartTime().ToString();
             endTimeLabel.Text = sample.getEndTime().ToString();
+        }
 
-            //Todo: Display average data rate (After data rate has been found)
+        /// <summary>
+        /// This event handler updates the progress
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            Console.WriteLine("ProgressedChanged!");
 
-            foreach (Packet packet in sample.getPackets())
+            alert.Message = "In progress, please wait... " + e.ProgressPercentage.ToString() + "%"; // Update label
+            alert.ProgressValue = e.ProgressPercentage; // Update progress bar
+        }
+
+        /// <summary>
+        /// This event handler deals with the results of the background operation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
             {
-                packetContentTextBox.AppendText("Packet:\n");
-                packetContentTextBox.AppendText("Time: " + packet.getTime().ToString() + " " + packet.getTime().Millisecond.ToString() + "\n");
-                packetContentTextBox.AppendText("Data: " + packet.getByteStr() + "\n");
-                packetContentTextBox.AppendText("EEP: " + packet.getEEP().ToString() + "\n");
-                packetContentTextBox.AppendText("None: " + packet.getNone().ToString() + "\n");
+                MessageBox.Show("Cancelled!");
+            }
+            else if (e.Error != null)
+            {
+                MessageBox.Show("Error: " + e.Error.Message);
+            }
+            else
+            {
+                packetContentTextBox.AppendText("File start time: " + sample.getStartTime().ToString() + "\n");
+                packetContentTextBox.AppendText("File end time: " + sample.getEndTime().ToString() + "\n");
+                packetContentTextBox.AppendText("File source port: " + sample.getSourcePort() + "\n");
 
-                //"Time", "Address", "Port", "Protocol", "Length", "Errors"
-                ListViewItem item = new ListViewItem();
-                item.Text = packet.getTime().ToString() + "." + packet.getTime().Millisecond.ToString();
-                List<ListViewItem.ListViewSubItem> subItems = new List<ListViewItem.ListViewSubItem>();
-                subItems.Add(new ListViewItem.ListViewSubItem());
-                subItems[0].Text = packet.getAddressStr();
-                subItems.Add(new ListViewItem.ListViewSubItem());
-                subItems[1].Text = packet.getPort().ToString();
-                subItems.Add(new ListViewItem.ListViewSubItem());
-                subItems[2].Text = packet.getProtocol().ToString();
-                subItems.Add(new ListViewItem.ListViewSubItem());
-                subItems[3].Text = packet.getDataLength().ToString();
-                subItems.Add(new ListViewItem.ListViewSubItem());
-                string errorStr = "";
-
-                if (packet.getEEP() == true)
+                foreach (Packet packet in sample.getPackets())
                 {
-                    errorStr += "EEP, ";
-                }
-                if (packet.getNone() == true)
-                {
-                    errorStr += "None, ";
+                    packetContentTextBox.AppendText("Packet:\n");
+                    packetContentTextBox.AppendText("Time: " + packet.getTime().ToString() + " " + packet.getTime().Millisecond.ToString() + "\n");
+                    packetContentTextBox.AppendText("Data: " + packet.getByteStr() + "\n");
+                    packetContentTextBox.AppendText("EEP: " + packet.getEEP().ToString() + "\n");
+                    packetContentTextBox.AppendText("None: " + packet.getNone().ToString() + "\n");
+
+                    //"Time", "Address", "Port", "Protocol", "Length", "Errors"
+                    ListViewItem item = new ListViewItem();
+                    item.Text = packet.getTime().ToString() + "." + packet.getTime().Millisecond.ToString();
+                    List<ListViewItem.ListViewSubItem> subItems = new List<ListViewItem.ListViewSubItem>();
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    subItems[0].Text = packet.getAddressStr();
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    subItems[1].Text = packet.getPort().ToString();
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    subItems[2].Text = packet.getProtocol().ToString();
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    subItems[3].Text = packet.getDataLength().ToString();
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    string errorStr = "";
+
+                    if (packet.getEEP() == true)
+                    {
+                        errorStr += "EEP, ";
+                    }
+                    if (packet.getNone() == true)
+                    {
+                        errorStr += "None, ";
+                    }
+
+                    if (errorStr.EndsWith(", "))
+                    {
+                        errorStr = errorStr.Remove(errorStr.Length - 2, 2);
+                    }
+                    subItems[4].Text = errorStr;
+
+                    foreach (ListViewItem.ListViewSubItem subItem in subItems)
+                    {
+                        item.SubItems.Add(subItem);
+                    }
+
+                    packetListView.Items.Add(item);
                 }
 
-                if (errorStr.EndsWith(", "))
-                {
-                    errorStr = errorStr.Remove(errorStr.Length - 2, 2);
-                }
-                subItems[4].Text = errorStr;
-
-                foreach(ListViewItem.ListViewSubItem subItem in subItems)
-                {
-                    item.SubItems.Add(subItem);
-                }
-
-                packetListView.Items.Add(item);
+                //Todo: Display average data rate (After data rate has been found)
             }
 
-            
+            // Close the AlertForm
+            alert.Close();
+        }
+
+
+        /// <summary>
+        /// This event handler cancels the backgroundworker, fired from Cancel button in AlertForm
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            if (backgroundWorker1.WorkerSupportsCancellation == true)
+            {
+                // Cancel the asynchronous operation.
+                backgroundWorker1.CancelAsync();
+                // Close the AlertForm
+                alert.Close();
+            }
         }
 
         private void errorLocationsInTeTrafficToolStripMenuItem_Click(object sender, EventArgs e)
