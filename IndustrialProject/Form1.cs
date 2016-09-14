@@ -40,6 +40,7 @@ namespace IndustrialProject
             dataRateOverTimeToolStripMenuItem.Checked = true;
 
             packetListView.View = View.Details;
+            tabControl1.SelectedIndexChanged += new EventHandler(tabViewSelectedIndexChanged);
 
             string[] columns = { "Time", "Address", "Port", "Protocol", "Length", "Errors" };
             ColumnHeader columnHeader;
