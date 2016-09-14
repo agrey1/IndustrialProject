@@ -175,7 +175,7 @@ namespace IndustrialProject
                         //Draw a red line above the scrollbar
                         int x = packetListView.Parent.Location.X + packetListView.Location.X + 660;
                         int y = packetListView.Parent.Location.Y + packetListView.Location.Y + 78;
-                        int drawY = (int)((float)180 * ((float)count / (float)sample.getPackets().Count));
+                        int drawY = (int)((float)(packetListView.Height - 35) * ((float)count / (float)sample.getPackets().Count));
 
                         /*
                         http://www.codeproject.com/Questions/301044/Drawing-line-above-all-the-controls-in-the-form
