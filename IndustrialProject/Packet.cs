@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +14,10 @@ namespace IndustrialProject
         int addressType;
         bool eep = false;
         bool none = false;
+        bool invalidAddress = false;
         int port;
         int protocol;
+        int sequenceNumber = -1;
 
         const int ADDRESS_TYPE_PATH = 0;
         const int ADDRESS_TYPE_LOGICAL = 1;
@@ -57,7 +59,8 @@ namespace IndustrialProject
             }
             else
             {
-
+                //Invalid address
+                invalidAddress = true;
             }
         }
 
@@ -127,6 +130,26 @@ namespace IndustrialProject
             }
 
             return addresses;
+        }
+
+        public int getSequenceNumber()
+        {
+            return sequenceNumber;
+        }
+
+        public void setSequenceNumber(int number)
+        {
+            this.sequenceNumber = number;
+        }
+
+        public bool getInvalidAddress()
+        {
+            return invalidAddress;
+        }
+
+        public List<int> getBytes()
+        {
+            return this.bytes;
         }
     }
 }
