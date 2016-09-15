@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -133,12 +133,12 @@ namespace IndustrialProject
                 */
 
                 int count = 0;
+                int errorCount = 0;
                 foreach (Packet packet in sample.getPackets())
                 {
                     packets = sample.getPackets();
                     packetCountLabel.Text = packets.Count.ToString();
 
-                    //Todo: Display number of erronous packets
                     startTimeLabel.Text = sample.getStartTime().ToString();
                     endTimeLabel.Text = sample.getEndTime().ToString();
 
@@ -162,9 +162,11 @@ namespace IndustrialProject
                     subItems[1].Text = packet.getPort().ToString();
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     subItems[2].Text = packet.getSequenceNumber().ToString();
+
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     subItems[3].Text = packet.getProtocol().ToString();
                     subItems.Add(new ListViewItem.ListViewSubItem());
+                    
                     subItems[4].Text = packet.getDataLength().ToString();
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     string errorStr = "";
@@ -185,8 +187,16 @@ namespace IndustrialProject
                     {
                         if (packets[count - 1].getSequenceNumber() != packet.getSequenceNumber() - 1)
                         {
-                            errorStr += "Out of sequence, ";
-                            packet.setOutOfSequence(true);
+                            if (packets[count - 1].getSequenceNumber() == packet.getSequenceNumber())
+                            {
+                                errorStr += "Repeat, ";
+                                packet.setRepeat(true);
+                            }
+                            else
+                            {
+                                errorStr += "Out of sequence, ";
+                                packet.setOutOfSequence(true);
+                            }
                         }
                     }
 
@@ -227,10 +237,13 @@ namespace IndustrialProject
                     }
                        
 
+                    if (packet.hasError()) errorCount++;
+
                     packetListView.Items.Add(item);
                     count++;
                 }
 
+                errorCountLabel.Text = errorCount.ToString();
 
                 //Todo: Display average data rate (After data rate has been found)
             }

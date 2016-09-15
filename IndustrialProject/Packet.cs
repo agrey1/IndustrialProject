@@ -16,6 +16,7 @@ namespace IndustrialProject
         bool none = false;
         bool invalidAddress = false;
         bool outOfSequence = false;
+        bool repeat = false;
         int port;
         int protocol;
         int sequenceNumber = -1;
@@ -79,7 +80,8 @@ namespace IndustrialProject
         public string getHexStr()
         {
             string hexStr = "";
-            foreach (int b in bytes)
+
+            foreach(int b in bytes)
             {
                 hexStr += Convert.ToByte(b).ToString("X") + " ";
             }
@@ -169,6 +171,16 @@ namespace IndustrialProject
             return outOfSequence;
         }
 
+        public bool getRepeat()
+        {
+            return repeat;
+        }
+
+        public void setRepeat(bool value)
+        {
+            this.repeat = value;
+        }
+
         public void setOutOfSequence(bool value)
         {
             outOfSequence = value;
@@ -176,7 +188,7 @@ namespace IndustrialProject
 
         public bool hasError()
         {
-            return (invalidAddress || outOfSequence || eep || none);
+            return (invalidAddress || outOfSequence || eep || none || repeat);
         }
 
         public List<int> getBytes()
