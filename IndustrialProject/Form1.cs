@@ -293,7 +293,7 @@ namespace IndustrialProject
         {
             if (packetListView.SelectedIndices.Count > 0)
             {
-                packetContentTextBox.Text = sample.getPackets()[packetListView.SelectedIndices[0]].getByteStr();
+                packetContentTextBox.Text = sample.getPackets()[packetListView.SelectedIndices[0]].getHexStr();
             }
         }
     }

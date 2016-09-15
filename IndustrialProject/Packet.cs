@@ -80,7 +80,7 @@ namespace IndustrialProject
             string hexStr = "";
             foreach(int b in bytes)
             {
-                hexStr += Convert.ToByte(b).ToString() + " ";
+                hexStr += Convert.ToByte(b).ToString("X") + " ";
             }
 
             return hexStr.Trim();
