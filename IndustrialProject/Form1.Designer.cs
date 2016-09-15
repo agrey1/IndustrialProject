@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -92,14 +91,16 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.packetContentTextBox = new System.Windows.Forms.RichTextBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.nextErrorButton = new System.Windows.Forms.Button();
             this.packetListView = new System.Windows.Forms.ListView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.averageDataRateLabel = new System.Windows.Forms.Label();
+            this.lblAverageDataRate = new System.Windows.Forms.Label();
             this.endTimeLabel = new System.Windows.Forms.Label();
             this.startTimeLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -111,7 +112,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
@@ -507,6 +507,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.webBrowser1);
             this.tabPage2.Controls.Add(this.groupBox13);
             this.tabPage2.Controls.Add(this.groupBox12);
             this.tabPage2.Controls.Add(this.groupBox11);
@@ -518,6 +519,14 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Port 1";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // webBrowser1
+            // 
+            this.webBrowser1.Location = new System.Drawing.Point(429, 25);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.Size = new System.Drawing.Size(250, 270);
+            this.webBrowser1.TabIndex = 14;
             // 
             // groupBox13
             // 
@@ -565,6 +574,7 @@
             // 
             // groupBox11
             // 
+            this.groupBox11.Controls.Add(this.nextErrorButton);
             this.groupBox11.Controls.Add(this.packetListView);
             this.groupBox11.Location = new System.Drawing.Point(6, 301);
             this.groupBox11.Name = "groupBox11";
@@ -597,7 +607,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.averageDataRateLabel);
+            this.groupBox1.Controls.Add(this.lblAverageDataRate);
             this.groupBox1.Controls.Add(this.endTimeLabel);
             this.groupBox1.Controls.Add(this.startTimeLabel);
             this.groupBox1.Controls.Add(this.label5);
@@ -609,18 +619,18 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(673, 289);
+            this.groupBox1.Size = new System.Drawing.Size(416, 289);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Details";
             // 
-            // averageDataRateLabel
+            // lblAverageDataRate
             // 
-            this.averageDataRateLabel.AutoSize = true;
-            this.averageDataRateLabel.Location = new System.Drawing.Point(111, 123);
-            this.averageDataRateLabel.Name = "averageDataRateLabel";
-            this.averageDataRateLabel.Size = new System.Drawing.Size(0, 13);
-            this.averageDataRateLabel.TabIndex = 9;
+            this.lblAverageDataRate.AutoSize = true;
+            this.lblAverageDataRate.Location = new System.Drawing.Point(111, 123);
+            this.lblAverageDataRate.Name = "lblAverageDataRate";
+            this.lblAverageDataRate.Size = new System.Drawing.Size(0, 13);
+            this.lblAverageDataRate.TabIndex = 9;
             // 
             // endTimeLabel
             // 
@@ -719,11 +729,6 @@
             this.richTextBox2.Size = new System.Drawing.Size(1078, 59);
             this.richTextBox2.TabIndex = 6;
             this.richTextBox2.Text = "";
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // backgroundWorker1
             // 
@@ -826,7 +831,6 @@
         private System.Windows.Forms.ToolStripMenuItem errorLocationsInTeTrafficToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem unexpectedDataValuesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem packetRateToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ListView packetListView;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
@@ -839,13 +843,15 @@
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.Label errorCountLabel;
         private System.Windows.Forms.Label packetCountLabel;
-        private System.Windows.Forms.Label averageDataRateLabel;
+        private System.Windows.Forms.Label lblAverageDataRate;
         private System.Windows.Forms.Label endTimeLabel;
         private System.Windows.Forms.Label startTimeLabel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.Button nextErrorButton;
     }
 }
 
