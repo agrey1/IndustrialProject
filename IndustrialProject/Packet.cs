@@ -15,6 +15,7 @@ namespace IndustrialProject
         bool eep = false;
         bool none = false;
         bool invalidAddress = false;
+        bool outOfSequence = false;
         int port;
         int protocol;
         int sequenceNumber = -1;
@@ -73,6 +74,17 @@ namespace IndustrialProject
             }
 
             return byteStr;
+        }
+
+        public string getHexStr()
+        {
+            string hexStr = "";
+            foreach(int b in bytes)
+            {
+                hexStr += Convert.ToByte(b).ToString("X") + " ";
+            }
+
+            return hexStr.Trim();
         }
 
         public int getDataLength()
@@ -145,6 +157,21 @@ namespace IndustrialProject
         public bool getInvalidAddress()
         {
             return invalidAddress;
+        }
+
+        public bool getOutOfSequence()
+        {
+            return outOfSequence;
+        }
+
+        public void setOutOfSequence(bool value)
+        {
+            outOfSequence = value;
+        }
+
+        public bool hasError()
+        {
+            return (invalidAddress || outOfSequence || eep || none);
         }
 
         public List<int> getBytes()
