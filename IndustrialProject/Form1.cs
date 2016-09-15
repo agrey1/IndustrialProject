@@ -142,6 +142,8 @@ namespace IndustrialProject
                     startTimeLabel.Text = sample.getStartTime().ToString();
                     endTimeLabel.Text = sample.getEndTime().ToString();
 
+                    lblAverageDataRate.Text = sample.getDataRate().ToString() + " (bit/s)";
+
                     /*
                     packetContentTextBox.AppendText("Packet:\n");
                     packetContentTextBox.AppendText("Time: " + packet.getTime().ToString() + " " + packet.getTime().Millisecond.ToString() + "\n");
