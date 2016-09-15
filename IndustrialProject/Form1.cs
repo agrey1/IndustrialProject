@@ -223,7 +223,7 @@ namespace IndustrialProject
                     {
                         item.SubItems.Add(subItem);
                     }
-
+                       
 
                     packetListView.Items.Add(item);
                     count++;
@@ -301,11 +301,11 @@ namespace IndustrialProject
         private void nextErrorButton_Click(object sender, EventArgs e)
         {
             int current = 0;
-            if (packetListView.SelectedIndices.Count > 0)
+            if(packetListView.SelectedIndices.Count > 0)
             {
                 current = packetListView.SelectedIndices[0];
 
-                if (current == sample.getPackets().Count - 1)
+                if(current == sample.getPackets().Count - 1)
                 {
                     current = 0;
                 }
@@ -325,7 +325,7 @@ namespace IndustrialProject
                         break;
                     }
 
-                    if (i == sample.getPackets().Count - 1)
+                    if(i == sample.getPackets().Count - 1)
                     {
                         MessageBox.Show("The currently open traffic sample does not contain any errors.", "No errors found", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
