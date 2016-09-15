@@ -573,13 +573,27 @@
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Packet list";
             // 
+            // nextErrorButton
+            // 
+            this.nextErrorButton.Location = new System.Drawing.Point(592, 211);
+            this.nextErrorButton.Name = "nextErrorButton";
+            this.nextErrorButton.Size = new System.Drawing.Size(75, 23);
+            this.nextErrorButton.TabIndex = 15;
+            this.nextErrorButton.Tag = "#";
+            this.nextErrorButton.Text = "Next Error";
+            this.nextErrorButton.UseVisualStyleBackColor = true;
+            this.nextErrorButton.Click += new System.EventHandler(this.nextErrorButton_Click);
+            // 
             // packetListView
             // 
+            this.packetListView.FullRowSelect = true;
             this.packetListView.Location = new System.Drawing.Point(6, 19);
+            this.packetListView.MultiSelect = false;
             this.packetListView.Name = "packetListView";
-            this.packetListView.Size = new System.Drawing.Size(661, 215);
+            this.packetListView.Size = new System.Drawing.Size(661, 186);
             this.packetListView.TabIndex = 10;
             this.packetListView.UseCompatibleStateImageBehavior = false;
+            this.packetListView.SelectedIndexChanged += new System.EventHandler(this.packetListView_SelectedIndexChanged);
             // 
             // groupBox1
             // 
