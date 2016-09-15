@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,6 +69,46 @@ namespace IndustrialProject
                         try
                         {
                             packetTime = DateTime.Parse(line);
+
+                            List<int> bytes = new List<int>();
+                            if (lines.Count - lineCount > 3)
+                            {
+                                string dataLine = lines[lineCount + 1].ToString() + lines[lineCount + 2].ToString() + lines[lineCount + 3].ToString().Trim();
+
+                                if (dataLine.StartsWith("P") && (dataLine.EndsWith("EOP") || dataLine.EndsWith("EEP") || dataLine.EndsWith("None")))
+                                {
+                                    bool eep = false;
+                                    bool none = false;
+                                    if (dataLine.EndsWith("EEP"))
+                                    {
+                                        eep = true;
+                                    }
+                                    else if (dataLine.EndsWith("None"))
+                                    {
+                                        none = true;
+                                        dataLine = dataLine.Remove(dataLine.Length - 1, 1);
+                                    }
+
+                                    dataLine = dataLine.Remove(0, 1);
+                                    dataLine = dataLine.Remove(dataLine.Length - 3, 3);
+                                    string[] byteParts = dataLine.Split(' ');
+                                    foreach (string byteStr in byteParts)
+                                    {
+                                        Console.WriteLine(byteStr);
+                                        int dataByte = Convert.ToInt32(byteStr.Trim(), 16);
+                                        bytes.Add(dataByte);
+                                    }
+
+                                    Packet packet = new Packet(packetTime, bytes, sourcePort);
+                                    packet.setEEP(eep);
+                                    packet.setNone(none);
+                                    packets.Add(packet);
+                                }
+                                else
+                                {
+                                    //Invalid line
+                                }
+                            }
                         }
                         catch (FormatException exception)
                         {
@@ -79,46 +119,6 @@ namespace IndustrialProject
                             {
                                 //Disconnect found
                                 endTime = DateTime.Parse(lines[lineCount + 2].ToString().Trim());
-                            }
-                        }
-
-                        List<int> bytes = new List<int>();
-                        if (lines.Count - lineCount > 3)
-                        {
-                            string dataLine = lines[lineCount + 1].ToString() + lines[lineCount + 2].ToString() + lines[lineCount + 3].ToString().Trim();
-
-                            if (dataLine.StartsWith("P") && (dataLine.EndsWith("EOP") || dataLine.EndsWith("EEP") || dataLine.EndsWith("None")))
-                            {
-                                bool eep = false;
-                                bool none = false;
-                                if (dataLine.EndsWith("EEP"))
-                                {
-                                    eep = true;
-                                }
-                                else if (dataLine.EndsWith("None"))
-                                {
-                                    none = true;
-                                    dataLine = dataLine.Remove(dataLine.Length - 1, 1);
-                                }
-
-                                dataLine = dataLine.Remove(0, 1);
-                                dataLine = dataLine.Remove(dataLine.Length - 3, 3);
-                                string[] byteParts = dataLine.Split(' ');
-                                foreach (string byteStr in byteParts)
-                                {
-                                    Console.WriteLine(byteStr);
-                                    int dataByte = Convert.ToInt32(byteStr.Trim(), 16);
-                                    bytes.Add(dataByte);
-                                }
-
-                                Packet packet = new Packet(packetTime, bytes, sourcePort);
-                                packet.setEEP(eep);
-                                packet.setNone(none);
-                                packets.Add(packet);
-                            }
-                            else
-                            {
-                                //Invalid line
                             }
                         }
                     }
