@@ -1,11 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace IndustrialProject
@@ -250,6 +245,11 @@ namespace IndustrialProject
 
         }
 
+<<<<<<< HEAD
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            webBrowser1.Navigate(@"C:\Users\Harry\Dropbox\IndustrialTeamProject\Harry\index.html");
+=======
         private void tabViewSelectedIndexChanged(object sender, EventArgs e)
         {
             while (linePanels.Count < tabControl1.TabCount)
@@ -274,6 +274,7 @@ namespace IndustrialProject
                     }
                 }
             }
+>>>>>>> 4537508d0a37f9894323b6c7ed516f098ed78690
         }
     }
 }
