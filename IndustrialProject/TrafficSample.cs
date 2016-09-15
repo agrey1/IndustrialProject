@@ -79,6 +79,24 @@ namespace IndustrialProject
             return this.startTime;
         }
 
+        /// <summary>
+        ///  This function retuns the data rate in bitx per second. 
+        /// </summary>
+        public double getDataRate()
+        {
+            return Math.Round((getTotalPacketListSize() / ((packets[packets.Count - 1].getTime()) - packets[0].getTime()).TotalMilliseconds) * 1000, 2);
+        }
+
+        /// <summary>
+        /// This method retrusn the total size of all the packets in the traffic sample in bits
+        /// </summary>
+        public int getTotalPacketListSize()
+        {
+            int totalsize = 0;
+            packets.ForEach(packet => totalsize += packet.getTotalBits());
+            return totalsize;
+        }
+
         public DateTime getEndTime()
         {
             return this.endTime;
