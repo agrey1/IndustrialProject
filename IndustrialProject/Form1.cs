@@ -183,8 +183,16 @@ namespace IndustrialProject
                     {
                         if (packets[count - 1].getSequenceNumber() != packet.getSequenceNumber() - 1)
                         {
-                            errorStr += "Out of sequence, ";
-                            packet.setOutOfSequence(true);
+                            if (packets[count - 1].getSequenceNumber() == packet.getSequenceNumber())
+                            {
+                                errorStr += "Repeat, ";
+                                packet.setRepeat(true);
+                            }
+                            else
+                            {
+                                errorStr += "Out of sequence, ";
+                                packet.setOutOfSequence(true);
+                            }
                         }
                     }
 
