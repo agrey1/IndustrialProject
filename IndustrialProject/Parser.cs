@@ -23,7 +23,6 @@ namespace IndustrialProject
             DateTime fileTime = DateTime.Now;
             DateTime endTime = DateTime.Now;
             int sourcePort = 0;
-
             string tempLine;
             ArrayList lines = new ArrayList();
             while ((tempLine = reader.ReadLine()) != null)

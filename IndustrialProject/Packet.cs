@@ -15,6 +15,7 @@ namespace IndustrialProject
         bool eep = false;
         bool none = false;
         bool invalidAddress = false;
+        bool outOfSequence = false;
         int port;
         int protocol;
         int sequenceNumber = -1;
@@ -28,7 +29,7 @@ namespace IndustrialProject
             this.bytes = bytes;
             this.port = port;
 
-            if(bytes[0] < 32)
+            if (bytes[0] < 32)
             {
                 //Path address byte, look for 254
                 addressType = ADDRESS_TYPE_LOGICAL;
@@ -50,7 +51,7 @@ namespace IndustrialProject
                     count++;
                 }
             }
-            else if(bytes[0] < 256)
+            else if (bytes[0] < 256)
             {
                 //Logical address
                 addressType = ADDRESS_TYPE_PATH;
@@ -73,6 +74,17 @@ namespace IndustrialProject
             }
 
             return byteStr;
+        }
+
+        public string getHexStr()
+        {
+            string hexStr = "";
+            foreach (int b in bytes)
+            {
+                hexStr += Convert.ToByte(b).ToString("X") + " ";
+            }
+
+            return hexStr.Trim();
         }
 
         public int getDataLength()
@@ -119,12 +131,12 @@ namespace IndustrialProject
         {
             string addresses = "";
 
-            foreach(int a in address)
+            foreach (int a in address)
             {
                 addresses += a.ToString() + ", ";
             }
 
-            if(addresses.EndsWith(", "))
+            if (addresses.EndsWith(", "))
             {
                 addresses = addresses.Remove(addresses.Length - 2, 2);
             }
@@ -145,6 +157,21 @@ namespace IndustrialProject
         public bool getInvalidAddress()
         {
             return invalidAddress;
+        }
+
+        public bool getOutOfSequence()
+        {
+            return outOfSequence;
+        }
+
+        public void setOutOfSequence(bool value)
+        {
+            outOfSequence = value;
+        }
+
+        public bool hasError()
+        {
+            return (invalidAddress || outOfSequence || eep || none);
         }
 
         public List<int> getBytes()
