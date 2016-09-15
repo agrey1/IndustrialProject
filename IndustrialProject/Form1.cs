@@ -184,6 +184,7 @@ namespace IndustrialProject
                         if (packets[count - 1].getSequenceNumber() != packet.getSequenceNumber() - 1)
                         {
                             errorStr += "Out of sequence, ";
+                            packet.setOutOfSequence(true);
                         }
                     }
 
@@ -222,7 +223,7 @@ namespace IndustrialProject
                     {
                         item.SubItems.Add(subItem);
                     }
-                       
+
 
                     packetListView.Items.Add(item);
                     count++;
@@ -294,6 +295,45 @@ namespace IndustrialProject
             if (packetListView.SelectedIndices.Count > 0)
             {
                 packetContentTextBox.Text = sample.getPackets()[packetListView.SelectedIndices[0]].getHexStr();
+            }
+        }
+
+        private void nextErrorButton_Click(object sender, EventArgs e)
+        {
+            int current = 0;
+            if (packetListView.SelectedIndices.Count > 0)
+            {
+                current = packetListView.SelectedIndices[0];
+
+                if (current == sample.getPackets().Count - 1)
+                {
+                    current = 0;
+                }
+            }
+
+            if (sample != null)
+            {
+                for (int i = current + 1; i < sample.getPackets().Count; i++)
+                {
+                    if (sample.getPackets()[i].hasError())
+                    {
+                        packetListView.Items[i].Selected = true;
+                        packetListView.Items[i].Focused = true;
+                        packetListView.EnsureVisible(i);
+                        packetListView.Select();
+
+                        break;
+                    }
+
+                    if (i == sample.getPackets().Count - 1)
+                    {
+                        MessageBox.Show("The currently open traffic sample does not contain any errors.", "No errors found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please open a traffic recording in order to view the errors contained within.", "No errors to view", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
