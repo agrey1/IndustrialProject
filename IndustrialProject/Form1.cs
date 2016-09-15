@@ -166,7 +166,7 @@ namespace IndustrialProject
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     subItems[3].Text = packet.getProtocol().ToString();
                     subItems.Add(new ListViewItem.ListViewSubItem());
-                    nextErrorButton click handler, setting Packet.outOfSequence error boolean
+                    
                     subItems[4].Text = packet.getDataLength().ToString();
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     string errorStr = "";
