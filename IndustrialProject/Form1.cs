@@ -12,6 +12,7 @@ namespace IndustrialProject
         Parser parser;
         TrafficSample sample;
         List<Packet> packets;
+        List<List<Panel>> linePanels = new List<List<Panel>>();
 
         public Form1()
         {
@@ -34,6 +35,7 @@ namespace IndustrialProject
             dataRateOverTimeToolStripMenuItem.Checked = true;
 
             packetListView.View = View.Details;
+            tabControl1.SelectedIndexChanged += new EventHandler(tabViewSelectedIndexChanged);
 
             string[] columns = { "Time", "Address", "Port", "Protocol", "Length", "Errors" };
             ColumnHeader columnHeader;
@@ -80,14 +82,6 @@ namespace IndustrialProject
         {
             parser = new Parser();
             sample = parser.parse(fileName, backgroundWorker1);
-            
-
-            packets = sample.getPackets();
-            packetCountLabel.Text = packets.Count.ToString();
-
-            //Todo: Display number of erronous packets
-            startTimeLabel.Text = sample.getStartTime().ToString();
-            endTimeLabel.Text = sample.getEndTime().ToString();
         }
 
         /// <summary>
@@ -124,8 +118,16 @@ namespace IndustrialProject
                 packetContentTextBox.AppendText("File end time: " + sample.getEndTime().ToString() + "\n");
                 packetContentTextBox.AppendText("File source port: " + sample.getSourcePort() + "\n");
 
+                int count = 0;
                 foreach (Packet packet in sample.getPackets())
                 {
+                    packets = sample.getPackets();
+                    packetCountLabel.Text = packets.Count.ToString();
+
+                    //Todo: Display number of erronous packets
+                    startTimeLabel.Text = sample.getStartTime().ToString();
+                    endTimeLabel.Text = sample.getEndTime().ToString();
+
                     packetContentTextBox.AppendText("Packet:\n");
                     packetContentTextBox.AppendText("Time: " + packet.getTime().ToString() + " " + packet.getTime().Millisecond.ToString() + "\n");
                     packetContentTextBox.AppendText("Data: " + packet.getByteStr() + "\n");
@@ -162,12 +164,38 @@ namespace IndustrialProject
                     }
                     subItems[4].Text = errorStr;
 
+                    if(errorStr != "")
+                    {
+                        item.BackColor = Color.Red;
+
+                        //Draw a red line above the scrollbar
+                        int x = packetListView.Parent.Location.X + packetListView.Location.X + 660;
+                        int y = packetListView.Parent.Location.Y + packetListView.Location.Y + 78;
+                        int drawY = (int)((float)(packetListView.Height - 35) * ((float)count / (float)sample.getPackets().Count));
+
+                        /*
+                        http://www.codeproject.com/Questions/301044/Drawing-line-above-all-the-controls-in-the-form
+                        */
+                        Panel pan = new Panel();
+                        pan.Enabled = false;
+                        pan.Width = 15;
+                        pan.Height = 1;
+                        pan.Location = new Point(x, y + drawY);
+                        pan.BackColor = Color.Red;
+                        Controls.Add(pan);
+                        pan.BringToFront();
+
+                        //Store the panel as such that it can be hidden when we switch tabs
+                        linePanels[tabControl1.SelectedIndex].Add(pan);
+                    }
+
                     foreach (ListViewItem.ListViewSubItem subItem in subItems)
                     {
                         item.SubItems.Add(subItem);
                     }
 
                     packetListView.Items.Add(item);
+                    count++;
                 }
 
                 //Todo: Display average data rate (After data rate has been found)
@@ -204,9 +232,36 @@ namespace IndustrialProject
 
         }
 
+<<<<<<< HEAD
         private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             webBrowser1.Navigate(@"C:\Users\Harry\Dropbox\IndustrialTeamProject\Harry\index.html");
+=======
+        private void tabViewSelectedIndexChanged(object sender, EventArgs e)
+        {
+            while (linePanels.Count < tabControl1.TabCount)
+            {
+                linePanels.Add(new List<Panel>());
+            }
+
+            for (int i = 0; i < linePanels.Count; i++)
+            {
+                if (i == tabControl1.SelectedIndex)
+                {
+                    foreach (Panel panel in linePanels[i])
+                    {
+                        panel.Show();
+                    }
+                }
+                else
+                {
+                    foreach (Panel panel in linePanels[i])
+                    {
+                        panel.Hide();
+                    }
+                }
+            }
+>>>>>>> 4537508d0a37f9894323b6c7ed516f098ed78690
         }
     }
 }
