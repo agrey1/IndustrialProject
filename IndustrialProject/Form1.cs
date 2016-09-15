@@ -133,12 +133,12 @@ namespace IndustrialProject
                 */
 
                 int count = 0;
+                int errorCount = 0;
                 foreach (Packet packet in sample.getPackets())
                 {
                     packets = sample.getPackets();
                     packetCountLabel.Text = packets.Count.ToString();
 
-                    //Todo: Display number of erronous packets
                     startTimeLabel.Text = sample.getStartTime().ToString();
                     endTimeLabel.Text = sample.getEndTime().ToString();
 
@@ -223,12 +223,14 @@ namespace IndustrialProject
                     {
                         item.SubItems.Add(subItem);
                     }
-                       
+
+                    if (packet.hasError()) errorCount++;
 
                     packetListView.Items.Add(item);
                     count++;
                 }
 
+                errorCountLabel.Text = errorCount.ToString();
 
                 //Todo: Display average data rate (After data rate has been found)
             }
