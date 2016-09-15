@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -144,6 +144,7 @@ namespace IndustrialProject
 
                     lblAverageDataRate.Text = sample.getDataRate().ToString() + " (bit/s)";
 
+                    nextErrorButton click handler, setting Packet.outOfSequence error boolean
                     /*
                     packetContentTextBox.AppendText("Packet:\n");
                     packetContentTextBox.AppendText("Time: " + packet.getTime().ToString() + " " + packet.getTime().Millisecond.ToString() + "\n");
@@ -162,9 +163,11 @@ namespace IndustrialProject
                     subItems[1].Text = packet.getPort().ToString();
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     subItems[2].Text = packet.getSequenceNumber().ToString();
+
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     subItems[3].Text = packet.getProtocol().ToString();
                     subItems.Add(new ListViewItem.ListViewSubItem());
+                    nextErrorButton click handler, setting Packet.outOfSequence error boolean
                     subItems[4].Text = packet.getDataLength().ToString();
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     string errorStr = "";
