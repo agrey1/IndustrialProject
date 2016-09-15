@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -42,7 +42,7 @@ namespace IndustrialProject
             packetListView.View = View.Details;
             tabControl1.SelectedIndexChanged += new EventHandler(tabViewSelectedIndexChanged);
 
-            string[] columns = { "Time", "Address", "Port", "Protocol", "Length", "Errors" };
+            string[] columns = { "Time", "Address", "Port", "Sequence Number", "Protocol", "Length", "Errors" };
             ColumnHeader columnHeader;
 
             foreach(string column in columns)
@@ -139,7 +139,7 @@ namespace IndustrialProject
                     packetContentTextBox.AppendText("EEP: " + packet.getEEP().ToString() + "\n");
                     packetContentTextBox.AppendText("None: " + packet.getNone().ToString() + "\n");
 
-                    //"Time", "Address", "Port", "Protocol", "Length", "Errors"
+                    //"Time", "Address", "Port", "Sequence Number", "Protocol", "Length", "Errors"
                     ListViewItem item = new ListViewItem();
                     item.Text = packet.getTime().ToString() + "." + packet.getTime().Millisecond.ToString();
                     List<ListViewItem.ListViewSubItem> subItems = new List<ListViewItem.ListViewSubItem>();
@@ -148,9 +148,11 @@ namespace IndustrialProject
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     subItems[1].Text = packet.getPort().ToString();
                     subItems.Add(new ListViewItem.ListViewSubItem());
-                    subItems[2].Text = packet.getProtocol().ToString();
+                    subItems[2].Text = packet.getSequenceNumber().ToString();
                     subItems.Add(new ListViewItem.ListViewSubItem());
-                    subItems[3].Text = packet.getDataLength().ToString();
+                    subItems[3].Text = packet.getProtocol().ToString();
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    subItems[4].Text = packet.getDataLength().ToString();
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     string errorStr = "";
 
@@ -162,12 +164,23 @@ namespace IndustrialProject
                     {
                         errorStr += "None, ";
                     }
+                    if(packet.getInvalidAddress() == true)
+                    {
+                        errorStr += "Invalid Address, ";
+                    }
+                    if (count > 0)
+                    {
+                        if (packets[count - 1].getSequenceNumber() != packet.getSequenceNumber() - 1)
+                        {
+                            errorStr += "Out of sequence, ";
+                        }
+                    }
 
                     if (errorStr.EndsWith(", "))
                     {
                         errorStr = errorStr.Remove(errorStr.Length - 2, 2);
                     }
-                    subItems[4].Text = errorStr;
+                    subItems[5].Text = errorStr;
 
                     if(errorStr != "")
                     {
