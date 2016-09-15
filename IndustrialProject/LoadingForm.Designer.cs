@@ -67,8 +67,10 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.labelProgress);
             this.Controls.Add(this.progressBar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "LoadingForm";
             this.Text = "LoadingForm";
+            this.Load += new System.EventHandler(this.LoadingForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

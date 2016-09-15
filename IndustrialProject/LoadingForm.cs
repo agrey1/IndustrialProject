@@ -35,6 +35,11 @@ namespace IndustrialProject
         public int ProgressValue
         {
             set { progressBar.Value = value; }
-        } 
+        }
+
+        private void LoadingForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

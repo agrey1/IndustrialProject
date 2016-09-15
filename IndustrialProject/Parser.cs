@@ -112,7 +112,7 @@ namespace IndustrialProject
                         }
                         catch (FormatException exception)
                         {
-                            //Console.Write(exception.Message);
+                            Console.Write("Parse Exception: " + exception.Message);
                             //this.Close();
 
                             if (line.Trim() == "E" && lines[lineCount + 1].ToString().Trim().Equals("Disconnect"))

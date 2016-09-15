@@ -75,6 +75,17 @@ namespace IndustrialProject
             return byteStr;
         }
 
+        public string getHexStr()
+        {
+            string hexStr = "";
+            foreach(int b in bytes)
+            {
+                hexStr += Convert.ToByte(b).ToString() + " ";
+            }
+
+            return hexStr.Trim();
+        }
+
         public int getDataLength()
         {
             return bytes.Count;
