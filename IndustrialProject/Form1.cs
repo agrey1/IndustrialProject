@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -127,7 +128,7 @@ namespace IndustrialProject
                     //Todo: Display number of erronous packets
                     startTimeLabel.Text = sample.getStartTime().ToString();
                     endTimeLabel.Text = sample.getEndTime().ToString();
-
+                    lblAverageDataRate.Text = sample.getDataRate().ToString() + " (bit/s)";
                     packetContentTextBox.AppendText("Packet:\n");
                     packetContentTextBox.AppendText("Time: " + packet.getTime().ToString() + " " + packet.getTime().Millisecond.ToString() + "\n");
                     packetContentTextBox.AppendText("Data: " + packet.getByteStr() + "\n");
@@ -199,7 +200,7 @@ namespace IndustrialProject
                         pan.BringToFront();
 
                         //Store the panel as such that it can be hidden when we switch tabs
-                        linePanels[tabControl1.SelectedIndex].Add(pan);
+                        //linePanels[tabControl1.SelectedIndex].Add(pan);
                     }
 
                     foreach (ListViewItem.ListViewSubItem subItem in subItems)
@@ -245,11 +246,6 @@ namespace IndustrialProject
 
         }
 
-<<<<<<< HEAD
-        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-            webBrowser1.Navigate(@"C:\Users\Harry\Dropbox\IndustrialTeamProject\Harry\index.html");
-=======
         private void tabViewSelectedIndexChanged(object sender, EventArgs e)
         {
             while (linePanels.Count < tabControl1.TabCount)
@@ -274,7 +270,6 @@ namespace IndustrialProject
                     }
                 }
             }
->>>>>>> 4537508d0a37f9894323b6c7ed516f098ed78690
         }
     }
 }

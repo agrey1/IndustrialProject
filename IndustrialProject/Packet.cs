@@ -100,6 +100,11 @@ namespace IndustrialProject
             this.none = value;
         }
 
+        public int getTotalBits()
+        {
+            return this.bytes.Count * 10;
+        }
+
         public bool getNone()
         {
             return this.none;
