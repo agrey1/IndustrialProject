@@ -183,6 +183,10 @@ namespace IndustrialProject
                     {
                         errorStr += "Invalid Address, ";
                     }
+                    if(packet.getInvalid() == true)
+                    {
+                        errorStr += "Invalid data, ";
+                    }
                     if (count > 0)
                     {
                         if (packets[count - 1].getSequenceNumber() != packet.getSequenceNumber() - 1)
@@ -212,8 +216,8 @@ namespace IndustrialProject
 
                         //Draw a red line above the scrollbar
                         int x = packetListView.Parent.Location.X + packetListView.Location.X + packetListView.Width - 1;
-                        int y = packetListView.Parent.Location.Y + packetListView.Location.Y + 40;
-                        int drawY = (int)((float)(packetListView.Height) * ((float)count / (float)sample.getPackets().Count));
+                        int y = packetListView.Parent.Location.Y + packetListView.Location.Y + 80;
+                        int drawY = (int)((float)(packetListView.Height - 45) * ((float)count / (float)sample.getPackets().Count));
 
                         /*
                         http://www.codeproject.com/Questions/301044/Drawing-line-above-all-the-controls-in-the-form
@@ -309,12 +313,31 @@ namespace IndustrialProject
         {
             if (packetListView.SelectedIndices.Count > 0)
             {
-                packetContentTextBox.Text = sample.getPackets()[packetListView.SelectedIndices[0]].getHexStr();
+                packetContentTextBox.Text = "";
+                string byteStr = sample.getPackets()[packetListView.SelectedIndices[0]].getOriginalData();
+                string[] parts = byteStr.Split(' ');
+
+                foreach(string part in parts)
+                {
+                    packetContentTextBox.Select(packetContentTextBox.TextLength, 0);
+
+                    if (part.Length > 2)
+                    {
+                        packetContentTextBox.SelectionBackColor = Color.Red;
+                    }
+
+                    packetContentTextBox.AppendText(part);
+                    packetContentTextBox.Select(packetContentTextBox.TextLength, 0);
+                    packetContentTextBox.SelectionBackColor = Color.White;
+                    packetContentTextBox.AppendText(" ");
+
+                }
             }
         }
 
         private void nextErrorButton_Click(object sender, EventArgs e)
         {
+            /*
             int current = 0;
             if(packetListView.SelectedIndices.Count > 0)
             {
@@ -350,6 +373,7 @@ namespace IndustrialProject
             {
                 MessageBox.Show("Please open a traffic recording in order to view the errors contained within.", "No errors to view", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+             * */
         }
     }
 }
