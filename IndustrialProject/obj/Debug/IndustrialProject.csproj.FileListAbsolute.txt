@@ -1,12 +1,3 @@
-c:\users\alexandergrey\documents\visual studio 2013\Projects\IndustrialProject\IndustrialProject\bin\Debug\IndustrialProject.exe.config
-c:\users\alexandergrey\documents\visual studio 2013\Projects\IndustrialProject\IndustrialProject\bin\Debug\IndustrialProject.exe
-c:\users\alexandergrey\documents\visual studio 2013\Projects\IndustrialProject\IndustrialProject\bin\Debug\IndustrialProject.pdb
-c:\users\alexandergrey\documents\visual studio 2013\Projects\IndustrialProject\IndustrialProject\obj\Debug\IndustrialProject.csprojResolveAssemblyReference.cache
-c:\users\alexandergrey\documents\visual studio 2013\Projects\IndustrialProject\IndustrialProject\obj\Debug\IndustrialProject.Form1.resources
-c:\users\alexandergrey\documents\visual studio 2013\Projects\IndustrialProject\IndustrialProject\obj\Debug\IndustrialProject.Properties.Resources.resources
-c:\users\alexandergrey\documents\visual studio 2013\Projects\IndustrialProject\IndustrialProject\obj\Debug\IndustrialProject.csproj.GenerateResource.Cache
-c:\users\alexandergrey\documents\visual studio 2013\Projects\IndustrialProject\IndustrialProject\obj\Debug\IndustrialProject.exe
-c:\users\alexandergrey\documents\visual studio 2013\Projects\IndustrialProject\IndustrialProject\obj\Debug\IndustrialProject.pdb
 C:\Users\Harry\Desktop\University\FourthYear\Industrial Team Project\IndustrialProject\IndustrialProject\bin\Debug\IndustrialProject.exe.config
 C:\Users\Harry\Desktop\University\FourthYear\Industrial Team Project\IndustrialProject\IndustrialProject\obj\Debug\IndustrialProject.exe
 C:\Users\Harry\Desktop\University\FourthYear\Industrial Team Project\IndustrialProject\IndustrialProject\obj\Debug\IndustrialProject.pdb
