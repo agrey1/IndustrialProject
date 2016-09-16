@@ -78,6 +78,7 @@ namespace IndustrialProject
                                 {
                                     bool eep = false;
                                     bool none = false;
+                                    bool invalid = false;
                                     if (dataLine.EndsWith("EEP"))
                                     {
                                         eep = true;
@@ -93,14 +94,38 @@ namespace IndustrialProject
                                     string[] byteParts = dataLine.Split(' ');
                                     foreach (string byteStr in byteParts)
                                     {
-                                        Console.WriteLine(byteStr);
-                                        int dataByte = Convert.ToInt32(byteStr.Trim(), 16);
+                                        String thisByte = byteStr.Trim().ToLower();
+
+                                        if (invalid == false)
+                                        {
+                                            char[] validHex = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
+                                            if (thisByte.Length == 2)
+                                            {
+                                                foreach (char c in thisByte)
+                                                {
+                                                    if (validHex.Contains(c) == false)
+                                                    {
+                                                        invalid = true;
+
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                invalid = true;
+                                            }
+                                        }
+
+                                        int dataByte = Convert.ToInt32(thisByte, 16);
                                         bytes.Add(dataByte);
                                     }
 
-                                    Packet packet = new Packet(packetTime, bytes, sourcePort);
+                                    Packet packet = new Packet(packetTime, bytes, dataLine, sourcePort);
                                     packet.setEEP(eep);
                                     packet.setNone(none);
+                                    packet.setInvalid(invalid);
                                     packets.Add(packet);
                                 }
                                 else
