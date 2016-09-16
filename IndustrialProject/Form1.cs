@@ -134,12 +134,20 @@ namespace IndustrialProject
 
                 int count = 0;
                 int errorCount = 0;
+                packets = sample.getPackets();
+
                 foreach (Packet packet in sample.getPackets())
                 {
-                    packets = sample.getPackets();
                     packetCountLabel.Text = packets.Count.ToString();
 
-                    startTimeLabel.Text = sample.getStartTime().ToString();
+                    if (sample.getStartTime().Equals(new DateTime(0)))
+                    {
+                        startTimeLabel.Text = sample.getPackets()[0].getTime() + " (Missing, used first packet time instead)";
+                    }
+                    else
+                    {
+                        startTimeLabel.Text = sample.getStartTime().ToString();
+                    }
                     endTimeLabel.Text = sample.getEndTime().ToString();
 
                     lblAverageDataRate.Text = sample.getDataRate().ToString() + " (bit/s)";
@@ -159,7 +167,15 @@ namespace IndustrialProject
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     subItems[0].Text = packet.getAddressStr();
                     subItems.Add(new ListViewItem.ListViewSubItem());
-                    subItems[1].Text = packet.getPort().ToString();
+                    int sourcePort = packet.getPort();
+                    if(sourcePort == -1)
+                    {
+                        subItems[1].Text = "Not found (missing from recording file)";
+                    }
+                    else
+                    {
+                        subItems[1].Text = sourcePort.ToString();
+                    }
                     subItems.Add(new ListViewItem.ListViewSubItem());
                     subItems[2].Text = packet.getSequenceNumber().ToString();
 
@@ -321,7 +337,7 @@ namespace IndustrialProject
                 {
                     packetContentTextBox.Select(packetContentTextBox.TextLength, 0);
 
-                    if (part.Length > 2)
+                    if (part.Length > 2 || !sample.isByteStrValid(part))
                     {
                         packetContentTextBox.SelectionBackColor = Color.Red;
                     }
@@ -330,14 +346,12 @@ namespace IndustrialProject
                     packetContentTextBox.Select(packetContentTextBox.TextLength, 0);
                     packetContentTextBox.SelectionBackColor = Color.White;
                     packetContentTextBox.AppendText(" ");
-
                 }
             }
         }
 
         private void nextErrorButton_Click(object sender, EventArgs e)
         {
-            /*
             int current = 0;
             if(packetListView.SelectedIndices.Count > 0)
             {
@@ -373,7 +387,6 @@ namespace IndustrialProject
             {
                 MessageBox.Show("Please open a traffic recording in order to view the errors contained within.", "No errors to view", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-             * */
         }
     }
 }
