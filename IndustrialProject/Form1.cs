@@ -148,7 +148,15 @@ namespace IndustrialProject
                     {
                         startTimeLabel.Text = sample.getStartTime().ToString();
                     }
-                    endTimeLabel.Text = sample.getEndTime().ToString();
+
+                    if (sample.getEndTime().Equals(new DateTime(0)))
+                    {
+                        endTimeLabel.Text = packets[packets.Count - 1].getTime() + " (Missing, used last packet time instead)";
+                    }
+                    else
+                    {
+                        endTimeLabel.Text = sample.getEndTime().ToString();
+                    }
 
                     lblAverageDataRate.Text = sample.getDataRate().ToString() + " (bit/s)";
 
