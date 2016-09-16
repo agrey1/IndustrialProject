@@ -373,7 +373,6 @@
             this.groupBox12.TabIndex = 12;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Visualisation";
-            // 
             // groupBox11
             // 
             this.groupBox11.Controls.Add(this.nextErrorButton);
