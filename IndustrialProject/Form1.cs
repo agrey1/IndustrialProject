@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace IndustrialProject
 {
@@ -18,6 +19,7 @@ namespace IndustrialProject
         TrafficSample sample;
         List<Packet> packets;
         List<List<Panel>> linePanels = new List<List<Panel>>();
+        string debugFolderPath;
 
         public Form1()
         {
@@ -60,6 +62,11 @@ namespace IndustrialProject
             {
                 linePanels.Add(new List<Panel>());
             }
+
+            debugFolderPath = System.AppDomain.CurrentDomain.BaseDirectory;
+            
+            webBrowserPort1.Navigate(debugFolderPath + "index_written.html");
+          
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -235,7 +242,6 @@ namespace IndustrialProject
                     {
                         item.SubItems.Add(subItem);
                     }
-                       
 
                     if (packet.hasError()) errorCount++;
 
@@ -350,6 +356,28 @@ namespace IndustrialProject
             {
                 MessageBox.Show("Please open a traffic recording in order to view the errors contained within.", "No errors to view", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void buttonLoadBrowser_Click(object sender, EventArgs e)
+        {
+            // Compose a string that consists of three lines.
+            string lines = 
+                "<!DOCTYPE html><html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/><script   src=\"https://code.jquery.com/jquery-3.1.0.min.js\"   integrity=\"sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=\"   crossorigin=\"anonymous\"></script><script src=\"https://code.highcharts.com/highcharts.js\"></script><script src=\"https://code.highcharts.com/modules/data.js\"></script><script src=\"https://code.highcharts.com/modules/exporting.js\"></script><script src=\"https://www.highcharts.com/samples/static/highslide-full.min.js\"></script><script src=\"https://www.highcharts.com/samples/static/highslide.config.js\" charset=\"utf-8\"></script><link rel=\"stylesheet\" type=\"text/css\" href=\"https://www.highcharts.com/samples/static/highslide.css\" /></head><body><script>$(document).ready(function() {var options = {chart: {renderTo: 'container',type: 'spline'},series: [{}]};var data =" +
+                "[[1,12],[2,5],[3,18],[4,13],[5,7],[6,4],[7,9],[8,10],[9,15],[10,22]]" + // JSON data goes here
+                ";options.series[0].data = data;var chart = new Highcharts.Chart(options);});</script><div id=\"container\" style=\"min-width: 310px; height: 400px; margin: 0 auto\"></div></body></html>";
+  
+            // Write the string to a file.
+            System.IO.StreamWriter file = new System.IO.StreamWriter(debugFolderPath + "index_written.html");
+            file.WriteLine(lines);
+
+            file.Close();
+
+            webBrowserPort1_single.Navigate(debugFolderPath + "index_written.html");
+        }
+
+        private void webBrowserPort1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            webBrowserPort1.Document.Body.Style = "zoom:75%;";
         }
     }
 }
