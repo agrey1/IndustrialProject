@@ -869,10 +869,8 @@ namespace IndustrialProject
             menuAboutclicked();
         }
 
-	private void Form1_Resize(object sender, EventArgs e)
+        private void resizeGroupBoxes()
         {
-            Console.WriteLine(this.Width + ", " + this.Height);
-
             //https://msdn.microsoft.com/en-us/library/ms951306.aspx
             // Arrange the groupBoxes in a grid formation
             GroupBox[] groupBoxes = new GroupBox[] { groupBoxPort1, groupBox4, groupBox5, groupBox6, groupBox7, groupBox9, groupBox10, groupBox8 };
@@ -886,6 +884,16 @@ namespace IndustrialProject
                     groupBox.SetBounds(cx * row, cy * col, cx - 10, cy - 10);
                 }
             }
+        }
+
+	    private void Form1_Resize(object sender, EventArgs e)
+        {
+            resizeGroupBoxes();
+        }
+
+        private void Form1_Layout(object sender, LayoutEventArgs e)
+        {
+            resizeGroupBoxes();
         }
     }
 }
