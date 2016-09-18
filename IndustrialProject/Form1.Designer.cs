@@ -1,12 +1,10 @@
-﻿namespace IndustrialProject
-{
+namespace IndustrialProject {
     partial class Form1
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -19,9 +17,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -29,9 +25,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,7 +126,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1370, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1384, 24);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -277,12 +273,15 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(12, 73);
+            this.tabControl1.Location = new System.Drawing.Point(12, 58);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1423, 536);
+            this.tabControl1.Size = new System.Drawing.Size(1356, 462);
             this.tabControl1.TabIndex = 10;
             // 
             // tabPage1
@@ -298,70 +297,91 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1415, 510);
+            this.tabPage1.Size = new System.Drawing.Size(1348, 436);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Overview";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox8
             // 
+            this.groupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox8.Location = new System.Drawing.Point(1050, 264);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(342, 252);
+            this.groupBox8.Size = new System.Drawing.Size(340, 177);
             this.groupBox8.TabIndex = 8;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Port 8";
             // 
             // groupBox10
             // 
+            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox10.Location = new System.Drawing.Point(702, 264);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(342, 252);
+            this.groupBox10.Size = new System.Drawing.Size(340, 177);
             this.groupBox10.TabIndex = 8;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Port 7";
             // 
             // groupBox9
             // 
+            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox9.Location = new System.Drawing.Point(354, 264);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(342, 252);
+            this.groupBox9.Size = new System.Drawing.Size(340, 177);
             this.groupBox9.TabIndex = 8;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Port 6";
             // 
             // groupBox7
             // 
+            this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox7.Location = new System.Drawing.Point(6, 263);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(342, 252);
+            this.groupBox7.Size = new System.Drawing.Size(340, 177);
             this.groupBox7.TabIndex = 9;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Port 5";
             // 
             // groupBox6
             // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox6.Location = new System.Drawing.Point(1050, 6);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(342, 252);
+            this.groupBox6.Size = new System.Drawing.Size(340, 177);
             this.groupBox6.TabIndex = 8;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Port 4";
             // 
             // groupBox5
             // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Location = new System.Drawing.Point(702, 6);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(342, 252);
+            this.groupBox5.Size = new System.Drawing.Size(340, 177);
             this.groupBox5.TabIndex = 8;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Port 3";
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Location = new System.Drawing.Point(354, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(342, 252);
+            this.groupBox4.Size = new System.Drawing.Size(340, 177);
             this.groupBox4.TabIndex = 8;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Port 2";
@@ -378,6 +398,9 @@
             // 
             // webBrowserPort1
             // 
+            this.webBrowserPort1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.webBrowserPort1.Location = new System.Drawing.Point(6, 19);
             this.webBrowserPort1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowserPort1.Name = "webBrowserPort1";
@@ -396,70 +419,86 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1415, 510);
+            this.tabPage2.Size = new System.Drawing.Size(1348, 421);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Port 1";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox13
             // 
+            this.groupBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox13.Controls.Add(this.richTextBox1);
-            this.groupBox13.Location = new System.Drawing.Point(694, 301);
+            this.groupBox13.Location = new System.Drawing.Point(694, 173);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(705, 240);
+            this.groupBox13.Size = new System.Drawing.Size(640, 242);
             this.groupBox13.TabIndex = 17;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Packet contents";
             // 
             // richTextBox1
             // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.Location = new System.Drawing.Point(6, 19);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(689, 215);
+            this.richTextBox1.Size = new System.Drawing.Size(624, 217);
             this.richTextBox1.TabIndex = 8;
             this.richTextBox1.Text = "";
             // 
             // groupBox12
             // 
+            this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox12.Controls.Add(this.chart1);
-            this.groupBox12.Location = new System.Drawing.Point(700, 6);
+            this.groupBox12.Location = new System.Drawing.Point(694, 6);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(695, 289);
+            this.groupBox12.Size = new System.Drawing.Size(640, 151);
             this.groupBox12.TabIndex = 16;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Visualisation";
             // 
             // chart1
             // 
-            chartArea12.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea12);
-            legend12.Name = "Legend1";
-            this.chart1.Legends.Add(legend12);
-            this.chart1.Location = new System.Drawing.Point(6, 19);
+            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea6.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chart1.Legends.Add(legend6);
+            this.chart1.Location = new System.Drawing.Point(6, 11);
             this.chart1.Name = "chart1";
-            series12.ChartArea = "ChartArea1";
-            series12.Legend = "Legend1";
-            series12.Name = "Series1";
-            this.chart1.Series.Add(series12);
-            this.chart1.Size = new System.Drawing.Size(683, 264);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chart1.Series.Add(series6);
+            this.chart1.Size = new System.Drawing.Size(624, 134);
             this.chart1.TabIndex = 9;
             this.chart1.Text = "chart1";
             // 
             // groupBox11
             // 
+            this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox11.Controls.Add(this.listView1);
-            this.groupBox11.Location = new System.Drawing.Point(15, 301);
+            this.groupBox11.Location = new System.Drawing.Point(6, 172);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(673, 240);
+            this.groupBox11.Size = new System.Drawing.Size(673, 243);
             this.groupBox11.TabIndex = 15;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Packet list";
             // 
             // listView1
             // 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.Location = new System.Drawing.Point(6, 19);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(661, 215);
+            this.listView1.Size = new System.Drawing.Size(661, 218);
             this.listView1.TabIndex = 10;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
@@ -476,9 +515,9 @@
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.label15);
-            this.groupBox1.Location = new System.Drawing.Point(15, 6);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(416, 289);
+            this.groupBox1.Size = new System.Drawing.Size(673, 150);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Details";
@@ -581,9 +620,9 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.txtConsoleLog);
-            this.groupBox2.Location = new System.Drawing.Point(260, 615);
+            this.groupBox2.Location = new System.Drawing.Point(260, 526);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1094, 84);
+            this.groupBox2.Size = new System.Drawing.Size(1108, 84);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Console";
@@ -593,7 +632,7 @@
             this.txtConsoleLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtConsoleLog.Location = new System.Drawing.Point(10, 19);
             this.txtConsoleLog.Name = "txtConsoleLog";
-            this.txtConsoleLog.Size = new System.Drawing.Size(1078, 59);
+            this.txtConsoleLog.Size = new System.Drawing.Size(1092, 59);
             this.txtConsoleLog.TabIndex = 6;
             this.txtConsoleLog.Text = "";
             // 
@@ -604,8 +643,9 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 615);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 526);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(242, 84);
             this.pictureBox1.TabIndex = 13;
@@ -743,7 +783,8 @@
             // 
             // buttonQuickExit
             // 
-            this.buttonQuickExit.Location = new System.Drawing.Point(655, 27);
+            this.buttonQuickExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonQuickExit.Location = new System.Drawing.Point(703, 27);
             this.buttonQuickExit.Name = "buttonQuickExit";
             this.buttonQuickExit.Size = new System.Drawing.Size(25, 25);
             this.buttonQuickExit.TabIndex = 25;
@@ -752,7 +793,8 @@
             // 
             // buttonQuickManual
             // 
-            this.buttonQuickManual.Location = new System.Drawing.Point(1296, 27);
+            this.buttonQuickManual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonQuickManual.Location = new System.Drawing.Point(1306, 27);
             this.buttonQuickManual.Name = "buttonQuickManual";
             this.buttonQuickManual.Size = new System.Drawing.Size(25, 25);
             this.buttonQuickManual.TabIndex = 24;
@@ -761,7 +803,8 @@
             // 
             // buttonQuickAbout
             // 
-            this.buttonQuickAbout.Location = new System.Drawing.Point(1327, 27);
+            this.buttonQuickAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonQuickAbout.Location = new System.Drawing.Point(1337, 27);
             this.buttonQuickAbout.Name = "buttonQuickAbout";
             this.buttonQuickAbout.Size = new System.Drawing.Size(25, 25);
             this.buttonQuickAbout.TabIndex = 23;
@@ -770,7 +813,7 @@
             // 
             // buttonQuickPrint
             // 
-            this.buttonQuickPrint.Location = new System.Drawing.Point(78, 27);
+            this.buttonQuickPrint.Location = new System.Drawing.Point(74, 27);
             this.buttonQuickPrint.Name = "buttonQuickPrint";
             this.buttonQuickPrint.Size = new System.Drawing.Size(25, 25);
             this.buttonQuickPrint.TabIndex = 22;
@@ -779,7 +822,7 @@
             // 
             // buttonQuickSave
             // 
-            this.buttonQuickSave.Location = new System.Drawing.Point(47, 27);
+            this.buttonQuickSave.Location = new System.Drawing.Point(43, 27);
             this.buttonQuickSave.Name = "buttonQuickSave";
             this.buttonQuickSave.Size = new System.Drawing.Size(25, 25);
             this.buttonQuickSave.TabIndex = 21;
@@ -788,7 +831,7 @@
             // 
             // buttonQuickLoad
             // 
-            this.buttonQuickLoad.Location = new System.Drawing.Point(16, 27);
+            this.buttonQuickLoad.Location = new System.Drawing.Point(12, 27);
             this.buttonQuickLoad.Name = "buttonQuickLoad";
             this.buttonQuickLoad.Size = new System.Drawing.Size(25, 25);
             this.buttonQuickLoad.TabIndex = 20;
@@ -799,7 +842,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 711);
+            this.ClientSize = new System.Drawing.Size(1384, 622);
             this.Controls.Add(this.buttonQuickExit);
             this.Controls.Add(this.buttonQuickManual);
             this.Controls.Add(this.buttonQuickAbout);
@@ -811,9 +854,11 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(961, 643);
             this.Name = "Form1";
             this.Text = "STAR-SpaceWireTrafficViewerAnalyser";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -832,9 +877,7 @@
             this.PerformLayout();
 
         }
-
         #endregion
-
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -909,8 +952,6 @@
         private System.Windows.Forms.Button buttonQuickPrint;
         private System.Windows.Forms.Button buttonQuickSave;
         private System.Windows.Forms.Button buttonQuickLoad;
-
         public object chart { get; internal set; }
     }
 }
-

@@ -868,5 +868,24 @@ namespace IndustrialProject
         {
             menuAboutclicked();
         }
+
+	private void Form1_Resize(object sender, EventArgs e)
+        {
+            Console.WriteLine(this.Width + ", " + this.Height);
+
+            //https://msdn.microsoft.com/en-us/library/ms951306.aspx
+            // Arrange the groupBoxes in a grid formation
+            GroupBox[] groupBoxes = new GroupBox[] { groupBoxPort1, groupBox4, groupBox5, groupBox6, groupBox7, groupBox9, groupBox10, groupBox8 };
+            int cx = tabControl1.Width / 4;
+            int cy = (tabControl1.Height - 20) / 2;
+            for (int row = 0; row != 4; ++row)
+            {
+                for (int col = 0; col != 2; ++col)
+                {
+                    GroupBox groupBox = groupBoxes[col * 4 + row];
+                    groupBox.SetBounds(cx * row, cy * col, cx - 10, cy - 10);
+                }
+            }
+        }
     }
 }
