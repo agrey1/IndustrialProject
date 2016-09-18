@@ -1,10 +1,12 @@
-namespace IndustrialProject {
+﻿namespace IndustrialProject
+{
     partial class Form1
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -17,7 +19,9 @@ namespace IndustrialProject {
             }
             base.Dispose(disposing);
         }
+
         #region Windows Form Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -877,7 +881,9 @@ namespace IndustrialProject {
             this.PerformLayout();
 
         }
+
         #endregion
+
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -952,6 +958,8 @@ namespace IndustrialProject {
         private System.Windows.Forms.Button buttonQuickPrint;
         private System.Windows.Forms.Button buttonQuickSave;
         private System.Windows.Forms.Button buttonQuickLoad;
+
         public object chart { get; internal set; }
     }
 }
+
