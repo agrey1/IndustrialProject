@@ -19,6 +19,7 @@ namespace IndustrialProject
         bool outOfSequence = false;
         bool repeat = false;
         bool invalid = false;
+
         int port;
         int protocol;
         int sequenceNumber = -1;

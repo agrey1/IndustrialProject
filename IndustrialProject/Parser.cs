@@ -1,25 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Collections;
-using System.ComponentModel;
-
-namespace IndustrialProject
-{
+using System; using System.Collections.Generic; using System.Linq; using System.Text; using System.Threading.Tasks; using System.IO; using System.Collections; using System.ComponentModel; namespace 
+IndustrialProject {
     class Parser
     {
         public Parser()
         {
-
         }
-
         public TrafficSample parse(string filePath, BackgroundWorker backgroundWorker1)
         {
+            TrafficSample sample = new TrafficSample();
             StreamReader reader = new StreamReader(filePath);
-
             DateTime fileTime = DateTime.Now;
             DateTime endTime = DateTime.Now;
             int sourcePort = 0;
@@ -33,104 +22,130 @@ namespace IndustrialProject
                     {
                         tempLine += "\n";
                     }
-
                     if (tempLine == "EOP\n" || tempLine == "EEP\n")
                     {
                         lines[lines.Count - 1] = lines[lines.Count - 1].ToString().Trim();
                     }
-
                     lines.Add(tempLine);
                 }
             }
-
             List<Packet> packets = new List<Packet>();
             int lineCount = 0;
             foreach (string line in lines)
             {
                 int percentage = (int)Math.Floor(((float)lineCount / lines.Count) * 100);
                 backgroundWorker1.ReportProgress(percentage);
-
                 if (line.Length > 0)
                 {
                     //richTextBox1.AppendText(line);
-
                     if (lineCount == 0)
                     {
-                        fileTime = DateTime.Parse(line);
+                        try
+                        {
+                            fileTime = DateTime.Parse(line);
+                        }
+                        catch(FormatException e)
+                        {
+                            fileTime = new DateTime(0);
+                        }
                     }
                     else if (lineCount == 1)
                     {
-                        sourcePort = Convert.ToInt32(line);
+                        try
+                        {
+                            sourcePort = Convert.ToInt32(line);
+                        }
+                        catch (FormatException e)
+                        {
+                            sourcePort = -1;
+                        }
                     }
                     else
                     {
                         DateTime packetTime = DateTime.Now;
                         try
                         {
-                            packetTime = DateTime.Parse(line);
-
-                            List<int> bytes = new List<int>();
-                            if (lines.Count - lineCount > 3)
+                            if (line.Trim() != "E")
                             {
-                                string dataLine = lines[lineCount + 1].ToString() + lines[lineCount + 2].ToString() + lines[lineCount + 3].ToString().Trim();
+                                packetTime = DateTime.Parse(line);
 
-                                if (dataLine.StartsWith("P") && (dataLine.EndsWith("EOP") || dataLine.EndsWith("EEP") || dataLine.EndsWith("None")))
+                                List<int> bytes = new List<int>();
+                                if (lines.Count - lineCount > 3)
                                 {
-                                    bool eep = false;
-                                    bool none = false;
-                                    bool invalid = false;
-                                    if (dataLine.EndsWith("EEP"))
-                                    {
-                                        eep = true;
-                                    }
-                                    else if (dataLine.EndsWith("None"))
-                                    {
-                                        none = true;
-                                        dataLine = dataLine.Remove(dataLine.Length - 1, 1);
-                                    }
+                                    string dataLine = lines[lineCount + 1].ToString() + lines[lineCount + 2].ToString() + lines[lineCount + 3].ToString().Trim();
 
-                                    dataLine = dataLine.Remove(0, 1);
-                                    dataLine = dataLine.Remove(dataLine.Length - 3, 3);
-                                    string[] byteParts = dataLine.Split(' ');
-                                    foreach (string byteStr in byteParts)
+                                    if (dataLine.StartsWith("P") && (dataLine.EndsWith("EOP") || dataLine.EndsWith("EEP") || dataLine.EndsWith("None")))
                                     {
-                                        String thisByte = byteStr.Trim().ToLower();
-
-                                        if (invalid == false)
+                                        bool eep = false;
+                                        bool none = false;
+                                        bool invalid = false;
+                                        if (dataLine.EndsWith("EEP"))
                                         {
-                                            char[] validHex = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-
-                                            if (thisByte.Length == 2)
-                                            {
-                                                foreach (char c in thisByte)
-                                                {
-                                                    if (validHex.Contains(c) == false)
-                                                    {
-                                                        invalid = true;
-
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                invalid = true;
-                                            }
+                                            eep = true;
+                                        }
+                                        else if (dataLine.EndsWith("None"))
+                                        {
+                                            none = true;
+                                            dataLine = dataLine.Remove(dataLine.Length - 1, 1);
                                         }
 
-                                        int dataByte = Convert.ToInt32(thisByte, 16);
-                                        bytes.Add(dataByte);
-                                    }
+                                        dataLine = dataLine.Remove(0, 1);
+                                        dataLine = dataLine.Remove(dataLine.Length - 3, 3);
+                                        string[] byteParts = dataLine.Split(' ');
+                                        foreach (string byteStr in byteParts)
+                                        {
+                                            String thisByte = byteStr.Trim().ToLower();
 
-                                    Packet packet = new Packet(packetTime, bytes, dataLine, sourcePort);
-                                    packet.setEEP(eep);
-                                    packet.setNone(none);
-                                    packet.setInvalid(invalid);
-                                    packets.Add(packet);
+                                            if (invalid == false)
+                                            {
+                                                invalid = !sample.isByteStrValid(thisByte);
+                                            }
+
+                                            int dataByte = 0;
+                                            try
+                                            {
+                                                dataByte = Convert.ToInt32(thisByte, 16);
+                                            }
+                                            catch (FormatException exception)
+                                            {
+                                                //Invalid format such as "ZZ"
+                                                //Leave this byte as 0
+                                            }
+                                            catch (ArgumentOutOfRangeException exception)
+                                            {
+                                                //Empty strings after splitting due to extra spaces in the data string
+                                            }
+
+                                            bytes.Add(dataByte);
+                                        }
+
+                                        Packet packet = new Packet(packetTime, bytes, dataLine, sourcePort);
+                                        packet.setEEP(eep);
+                                        packet.setNone(none);
+                                        packet.setInvalid(invalid);
+                                        packets.Add(packet);
+                                    }
+                                    else
+                                    {
+                                        //Invalid line
+                                    }
                                 }
-                                else
+                            }
+
+                            if (line.Trim() == "E" && lines[lineCount + 1].ToString().Trim().Equals("Disconnect"))
+                            {
+                                //Disconnect found
+                                try
                                 {
-                                    //Invalid line
+                                    if (lineCount + 2 > lines.Count - 1)
+                                    {
+                                        throw new FormatException("End date missing");
+                                    }
+                                    endTime = DateTime.Parse(lines[lineCount + 2].ToString().Trim());
+                                }
+                                catch (FormatException ex)
+                                {
+                                    endTime = new DateTime(0);
                                 }
                             }
                         }
@@ -138,24 +153,14 @@ namespace IndustrialProject
                         {
                             Console.Write("Parse Exception: " + exception.Message);
                             //this.Close();
-
-                            if (line.Trim() == "E" && lines[lineCount + 1].ToString().Trim().Equals("Disconnect"))
-                            {
-                                //Disconnect found
-                                endTime = DateTime.Parse(lines[lineCount + 2].ToString().Trim());
-                            }
                         }
                     }
                 }
-
                 lineCount++;
             }
-
             reader.Close();
-
-            TrafficSample sample = new TrafficSample(fileTime, endTime, sourcePort);
+            sample = new TrafficSample(fileTime, endTime, sourcePort);
             sample.setPackets(packets);
-
             return sample;
         }
     }

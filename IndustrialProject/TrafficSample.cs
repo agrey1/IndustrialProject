@@ -13,6 +13,11 @@ namespace IndustrialProject
         int sourcePort;
         List<Packet> packets = new List<Packet>();
 
+        public TrafficSample()
+        {
+
+        }
+
         public TrafficSample(DateTime startTime, DateTime endTime, int sourcePort)
         {
             this.startTime = startTime;
@@ -61,9 +66,12 @@ namespace IndustrialProject
                 if (sequencePosition != -1) break;
             }
 
-            foreach (Packet packet in packets)
+            if (sequencePosition != -1)
             {
-                packet.setSequenceNumber(packet.getBytes()[sequencePosition]);
+                foreach (Packet packet in packets)
+                {
+                    packet.setSequenceNumber(packet.getBytes()[sequencePosition]);
+                }
             }
 
             this.packets = packets.ToList();
@@ -105,6 +113,28 @@ namespace IndustrialProject
         public int getSourcePort()
         {
             return this.sourcePort;
+        }
+
+        public bool isByteStrValid(String str)
+        {
+            char[] validHex = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
+            if (str.Length == 2)
+            {
+                foreach (char c in str)
+                {
+                    if (validHex.Contains(c) == false)
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
