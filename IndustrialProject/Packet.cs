@@ -11,12 +11,15 @@ namespace IndustrialProject
         DateTime timeReceived;
         List<int> bytes = new List<int>();
         List<int> address = new List<int>();
+        string originalBytes = "";
         int addressType;
         bool eep = false;
         bool none = false;
         bool invalidAddress = false;
         bool outOfSequence = false;
         bool repeat = false;
+        bool invalid = false;
+
         int port;
         int protocol;
         int sequenceNumber = -1;
@@ -24,11 +27,12 @@ namespace IndustrialProject
         const int ADDRESS_TYPE_PATH = 0;
         const int ADDRESS_TYPE_LOGICAL = 1;
 
-        public Packet(DateTime timeReceived, List<int> bytes, int port)
+        public Packet(DateTime timeReceived, List<int> bytes, string byteStr, int port)
         {
             this.timeReceived = timeReceived;
             this.bytes = bytes;
             this.port = port;
+            this.originalBytes = byteStr;
 
             if (bytes[0] < 32)
             {
@@ -87,6 +91,11 @@ namespace IndustrialProject
             }
 
             return hexStr.Trim();
+        }
+
+        public string getOriginalData()
+        {
+            return this.originalBytes;
         }
 
         public int getDataLength()
@@ -186,9 +195,19 @@ namespace IndustrialProject
             outOfSequence = value;
         }
 
+        public void setInvalid(bool value)
+        {
+            this.invalid = value;
+        }
+
+        public bool getInvalid()
+        {
+            return this.invalid;
+        }
+
         public bool hasError()
         {
-            return (invalidAddress || outOfSequence || eep || none || repeat);
+            return (invalidAddress || outOfSequence || eep || none || repeat || invalid);
         }
 
         public List<int> getBytes()

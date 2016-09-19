@@ -121,6 +121,152 @@ namespace IndustrialProject
             }
             else
             {
+                tabControl1.SelectedIndex = tabControl1.TabCount - 1;
+
+                /*
+                packetContentTextBox.AppendText("File start time: " + sample.getStartTime().ToString() + "\n");
+                packetContentTextBox.AppendText("File end time: " + sample.getEndTime().ToString() + "\n");
+                packetContentTextBox.AppendText("File source port: " + sample.getSourcePort() + "\n");
+                */
+
+                int count = 0;
+                int errorCount = 0;
+                packets = sample.getPackets();
+
+                foreach (Packet packet in sample.getPackets())
+                {
+                    packetCountLabel.Text = packets.Count.ToString();
+
+                    if (sample.getStartTime().Equals(new DateTime(0)))
+                    {
+                        startTimeLabel.Text = sample.getPackets()[0].getTime() + " (Missing, used first packet time instead)";
+                    }
+                    else
+                    {
+                        startTimeLabel.Text = sample.getStartTime().ToString();
+                    }
+
+                    if (sample.getEndTime().Equals(new DateTime(0)))
+                    {
+                        endTimeLabel.Text = packets[packets.Count - 1].getTime() + " (Missing, used last packet time instead)";
+                    }
+                    else
+                    {
+                        endTimeLabel.Text = sample.getEndTime().ToString();
+                    }
+
+                    lblAverageDataRate.Text = sample.getDataRate().ToString() + " (bit/s)";
+
+                    /*
+                    packetContentTextBox.AppendText("Packet:\n");
+                    packetContentTextBox.AppendText("Time: " + packet.getTime().ToString() + " " + packet.getTime().Millisecond.ToString() + "\n");
+                    packetContentTextBox.AppendText("Data: " + packet.getByteStr() + "\n");
+                    packetContentTextBox.AppendText("EEP: " + packet.getEEP().ToString() + "\n");
+                    packetContentTextBox.AppendText("None: " + packet.getNone().ToString() + "\n");
+                    */
+
+                    //"Time", "Address", "Port", "Sequence Number", "Protocol", "Length", "Errors"
+                    ListViewItem item = new ListViewItem();
+                    item.Text = packet.getTime().ToString() + "." + packet.getTime().Millisecond.ToString();
+                    List<ListViewItem.ListViewSubItem> subItems = new List<ListViewItem.ListViewSubItem>();
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    subItems[0].Text = packet.getAddressStr();
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    int sourcePort = packet.getPort();
+                    if(sourcePort == -1)
+                    {
+                        subItems[1].Text = "Not found (missing from recording file)";
+                    }
+                    else
+                    {
+                        subItems[1].Text = sourcePort.ToString();
+                    }
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    subItems[2].Text = packet.getSequenceNumber().ToString();
+
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    subItems[3].Text = packet.getProtocol().ToString();
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    
+                    subItems[4].Text = packet.getDataLength().ToString();
+                    subItems.Add(new ListViewItem.ListViewSubItem());
+                    string errorStr = "";
+
+                    if (packet.getEEP() == true)
+                    {
+                        errorStr += "EEP, ";
+                    }
+                    if (packet.getNone() == true)
+                    {
+                        errorStr += "None, ";
+                    }
+                    if (packet.getInvalidAddress() == true)
+                    {
+                        errorStr += "Invalid Address, ";
+                    }
+                    if(packet.getInvalid() == true)
+                    {
+                        errorStr += "Invalid data, ";
+                    }
+                    if (count > 0)
+                    {
+                        if (packets[count - 1].getSequenceNumber() != packet.getSequenceNumber() - 1)
+                        {
+                            if (packets[count - 1].getSequenceNumber() == packet.getSequenceNumber())
+                            {
+                                errorStr += "Repeat, ";
+                                packet.setRepeat(true);
+                            }
+                            else
+                            {
+                                errorStr += "Out of sequence, ";
+                                packet.setOutOfSequence(true);
+                            }
+                        }
+                    }
+
+                    if (errorStr.EndsWith(", "))
+                    {
+                        errorStr = errorStr.Remove(errorStr.Length - 2, 2);
+                    }
+                    subItems[5].Text = errorStr;
+
+                    if (errorStr != "")
+                    {
+                        item.BackColor = Color.Red;
+
+                        //Draw a red line above the scrollbar
+                        int x = packetListView.Parent.Location.X + packetListView.Location.X + packetListView.Width - 1;
+                        int y = packetListView.Parent.Location.Y + packetListView.Location.Y + 80;
+                        int drawY = (int)((float)(packetListView.Height - 45) * ((float)count / (float)sample.getPackets().Count));
+
+                        /*
+                        http://www.codeproject.com/Questions/301044/Drawing-line-above-all-the-controls-in-the-form
+                        */
+                        Panel pan = new Panel();
+                        pan.Enabled = false;
+                        pan.Width = 15;
+                        pan.Height = 1;
+                        pan.Location = new Point(x, y + drawY);
+                        pan.BackColor = Color.Red;
+                        Controls.Add(pan);
+                        pan.BringToFront();
+
+                        //Store the panel as such that it can be hidden when we switch tabs
+                        linePanels[tabControl1.SelectedIndex].Add(pan);
+                    }
+
+                    foreach (ListViewItem.ListViewSubItem subItem in subItems)
+                    {
+                        item.SubItems.Add(subItem);
+                    }
+                       
+
+                    if (packet.hasError()) errorCount++;
+
+                    packetListView.Items.Add(item);
+                    count++;
+                }
                 tabpages.Add(new Tuple<TabPage, TrafficSample>(createNewTab(sample.getSourcePort(), sample), sample));
             }
             // Close the AlertForm
@@ -298,7 +444,24 @@ namespace IndustrialProject
         {
             if (packetListView.SelectedIndices.Count > 0)
             {
-                packetContentTextBox.Text = sample.getPackets()[packetListView.SelectedIndices[0]].getHexStr();
+                packetContentTextBox.Text = "";
+                string byteStr = sample.getPackets()[packetListView.SelectedIndices[0]].getOriginalData();
+                string[] parts = byteStr.Split(' ');
+
+                foreach(string part in parts)
+                {
+                    packetContentTextBox.Select(packetContentTextBox.TextLength, 0);
+
+                    if (part.Length > 2 || !sample.isByteStrValid(part))
+                    {
+                        packetContentTextBox.SelectionBackColor = Color.Red;
+                    }
+
+                    packetContentTextBox.AppendText(part);
+                    packetContentTextBox.Select(packetContentTextBox.TextLength, 0);
+                    packetContentTextBox.SelectionBackColor = Color.White;
+                    packetContentTextBox.AppendText(" ");
+                }
             }
         }
 
@@ -704,6 +867,33 @@ namespace IndustrialProject
         private void buttonQuickAbout_Click_1(object sender, EventArgs e)
         {
             menuAboutclicked();
+        }
+
+        private void resizeGroupBoxes()
+        {
+            //https://msdn.microsoft.com/en-us/library/ms951306.aspx
+            // Arrange the groupBoxes in a grid formation
+            GroupBox[] groupBoxes = new GroupBox[] { groupBoxPort1, groupBox4, groupBox5, groupBox6, groupBox7, groupBox9, groupBox10, groupBox8 };
+            int cx = tabControl1.Width / 4;
+            int cy = (tabControl1.Height - 20) / 2;
+            for (int row = 0; row != 4; ++row)
+            {
+                for (int col = 0; col != 2; ++col)
+                {
+                    GroupBox groupBox = groupBoxes[col * 4 + row];
+                    groupBox.SetBounds(cx * row, cy * col, cx - 10, cy - 10);
+                }
+            }
+        }
+
+	    private void Form1_Resize(object sender, EventArgs e)
+        {
+            resizeGroupBoxes();
+        }
+
+        private void Form1_Layout(object sender, LayoutEventArgs e)
+        {
+            resizeGroupBoxes();
         }
     }
 }
